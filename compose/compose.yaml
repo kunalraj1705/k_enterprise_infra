@@ -1,0 +1,35 @@
+services:
+
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: krb_enterprise
+      POSTGRES_USER: krb
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U krb -d krb_enterprise"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  krb-enterprise:
+    image: krb-enterprise:0.0.1
+    ports:
+      - "8282:8282"
+    environment:
+      SPRING_PROFILES_ACTIVE: uat
+      DB_URL: jdbc:postgresql://postgres:5432/krb_enterprise
+      DB_USERNAME: krb
+      DB_PASSWORD: password
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - /home/ubuntu/workspace/k_enterprise/secrets/private-key.pem:/root/.krb-enterprise/secrets/private-key.pem:ro
+      - /home/ubuntu/workspace/k_enterprise/secrets/public-key.pem:/root/.krb-enterprise/secrets/public-key.pem:ro
+
+volumes:
+  postgres_data:
