@@ -20,10 +20,11 @@ services:
     ports:
       - "8282:8282"
     environment:
-      SPRING_PROFILES_ACTIVE: uat
-      DB_URL: jdbc:postgresql://postgres:5432/krb_enterprise
-      DB_USERNAME: krb
-      DB_PASSWORD: password
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      DB_URL: ${DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+
     depends_on:
       postgres:
         condition: service_healthy
