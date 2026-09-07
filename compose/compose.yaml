@@ -16,7 +16,7 @@ services:
       start_period: 10s
 
   krb-enterprise:
-    image: ghcr.io/kunalraj1705/k_enterprise:${IMAGE_TAG}
+    image: k_enterprise:${IMAGE_TAG}
     ports:
       - "8282:8282"
     environment:
