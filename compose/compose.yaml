@@ -18,7 +18,7 @@ services:
 
   krb-enterprise:
     container_name: krb-enterprise
-    image: k_enterprise:${IMAGE_TAG}
+    image: krbenterprise:${IMAGE_TAG}
     ports:
       - "8282:8282"
     environment:
