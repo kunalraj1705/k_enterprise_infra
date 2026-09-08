@@ -11,6 +11,6 @@ FROM eclipse-temurin:25-jre
 
 WORKDIR /app
 
-COPY --from=build /build/target/krbenterprise-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /build/target/krbenterprise.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
