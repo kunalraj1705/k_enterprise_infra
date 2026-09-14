@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: krb-enterprise
+  namespace: uat-core
+spec:
+  type: ClusterIP
+  selector:
+    app: krb-enterprise
+  ports:
+    - port: 8282
+      targetPort: 8282

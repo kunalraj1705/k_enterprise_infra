@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: krb-enterprise
+  namespace: uat-core
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: krb-enterprise
+
+  template:
+    metadata:
+      labels:
+        app: krb-enterprise
+
+    spec:
+      containers:
+        - name: krb-enterprise
+
+          image: ghcr.io/kunalraj1705/krbenterprise:c2590008ff4736317f904539a49d293c629c350e
+
+          ports:
+            - containerPort: 8282
+
+          envFrom:
+            - configMapRef:
+                name: krb-enterprise-config
+
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: krb-enterprise-secret
+                  key: DB_PASSWORD
+
+          volumeMounts:
+            - name: rsa-keys
+              mountPath: /root/.krb-enterprise/secrets
+              readOnly: true
+
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+
+      volumes:
+        - name: rsa-keys
+          secret:
+            secretName: krb-enterprise-rsa

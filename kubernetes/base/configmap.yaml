@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: krb-enterprise-config
+  namespace: uat-core
+
+data:
+  SPRING_PROFILES_ACTIVE: "uat"
+  DB_URL: "jdbc:postgresql://postgres:5432/krb_enterprise"
+  DB_USERNAME: "krb"
